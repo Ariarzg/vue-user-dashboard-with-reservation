@@ -14,6 +14,6 @@ onMounted(() => {
 <template>
   <div class="relative">
     <AppHeader />
-    <RouterView class="mt-54"></RouterView>
+    <RouterView></RouterView>
   </div>
 </template>
