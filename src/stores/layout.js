@@ -1,5 +1,5 @@
 import { updatePrimaryPalette, updateSurfacePalette } from '@primeuix/themes';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { defineStore } from 'pinia';
 
 export const useLayoutStore = defineStore('layout', () => {
@@ -430,5 +430,23 @@ export const useLayoutStore = defineStore('layout', () => {
     }
   }
 
-  return { primaryColors, primary, surfaces, surface, darkMode, toggleDarkMode, updateColors };
+  watch(primary, (newPrimary) => {
+    updateColors('primary', newPrimary);
+  });
+
+  watch(surface, (newSurface) => {
+    updateColors('surface', newSurface);
+  });
+
+  return {
+    primaryColors,
+    primary,
+    surfaces,
+    surface,
+    darkMode,
+    setPrimary,
+    setSurface,
+    toggleDarkMode,
+    updateColors,
+  };
 });
