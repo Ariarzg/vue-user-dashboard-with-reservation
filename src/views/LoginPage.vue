@@ -1,3 +1,3 @@
 <script setup></script>
 
-<template>Test</template>
+<template></template>

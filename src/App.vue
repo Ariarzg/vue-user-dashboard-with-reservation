@@ -1,5 +1,10 @@
-<script setup></script>
+<script setup>
+import AppHeader from './components/AppHeader.vue';
+</script>
 
 <template>
-  <RouterView></RouterView>
+  <div class="relative">
+    <AppHeader />
+    <RouterView></RouterView>
+  </div>
 </template>
