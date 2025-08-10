@@ -48,14 +48,24 @@ const onFormSubmit = (state) => {
       if (loginResponse.valid) {
         const userName = userStore.currentUser.name;
 
-        toast.add({ severity: 'success', summary: loginResponse.message, life: 3000 });
+        toast.add({
+          severity: 'success',
+          detail: loginResponse.message,
+          summary: 'Account',
+          life: 3000,
+        });
         toast.add({
           summary: `Welcome back ${userName}`,
           life: 5000,
         });
         router.push('/dashboard');
       } else {
-        toast.add({ severity: 'error', summary: loginResponse.message, life: 3000 });
+        toast.add({
+          severity: 'error',
+          detail: loginResponse.message,
+          summary: 'Account',
+          life: 3000,
+        });
       }
     });
   }

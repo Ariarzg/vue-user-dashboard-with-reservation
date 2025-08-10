@@ -57,15 +57,26 @@ const onFormSubmit = (state) => {
 
     userStore.signupUser(user).then((signupResponse) => {
       if (signupResponse.valid) {
-        toast.add({ severity: 'success', summary: signupResponse.message, life: 3000 });
+        toast.add({
+          severity: 'success',
+          summary: 'Account',
+          detail: signupResponse.message,
+          life: 3000,
+        });
         toast.add({
           severity: 'info',
-          summary: 'In order to use dashboard, please log in with your newly created account.',
+          summary: 'Account',
+          detail: 'In order to use dashboard, please log in with your newly created account.',
           life: 8000,
         });
         router.push('/');
       } else {
-        toast.add({ severity: 'error', summary: signupResponse.message, life: 3000 });
+        toast.add({
+          severity: 'error',
+          summary: 'Account',
+          detail: signupResponse.message,
+          life: 3000,
+        });
       }
     });
   }
