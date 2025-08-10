@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
+import { Toast } from 'primevue';
 import AppHeader from './components/AppHeader.vue';
 import { useLayoutStore } from '@/stores/layout';
 
@@ -12,6 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <Toast position="top-center" />
   <div class="relative">
     <AppHeader />
     <RouterView></RouterView>

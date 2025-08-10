@@ -1,7 +1,9 @@
 import './assets/styles/main.css';
 
 import { createApp } from 'vue';
+
 import { createPinia } from 'pinia';
+import piniaPersistedState from 'pinia-plugin-persistedstate';
 
 import App from './App.vue';
 import router from './router';
@@ -14,7 +16,10 @@ import { ToastService } from 'primevue';
 
 const app = createApp(App);
 
-app.use(createPinia());
+const pinia = createPinia();
+pinia.use(piniaPersistedState);
+
+app.use(pinia);
 
 app.use(router);
 

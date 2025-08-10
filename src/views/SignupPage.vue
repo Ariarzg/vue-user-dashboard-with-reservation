@@ -10,10 +10,9 @@ import {
   Button,
   Divider,
   useToast,
-  Toast,
   Message,
 } from 'primevue';
-import { onMounted, reactive } from 'vue';
+import { reactive, onMounted } from 'vue';
 import { yupResolver } from '@primevue/forms/resolvers/yup';
 import { useLayoutStore } from '@/stores/layout';
 import { useUserStore } from '@/stores/user';
@@ -27,11 +26,22 @@ const layoutStore = useLayoutStore();
 const userStore = useUserStore();
 
 const initialValues = reactive({
+  name: '',
   email: '',
+  password: '',
 });
 const resolver = yupResolver(
   yup.object().shape({
+    name: yup.string().required('Name is required'),
     email: yup.string().required('Email is required').email('Please Provide a Valid Email'),
+    password: yup
+      .string()
+      .required('Password is Required')
+      .min(8, 'Minimum 8 characters.')
+      .max(20, 'Maximum 20 characters.')
+      .test('lowercase', 'At least one lowercase.', (value) => /[a-z]/.test(value))
+      .test('uppercase', 'At least one uppercase.', (value) => /[A-Z]/.test(value))
+      .test('number', 'At least one number.', (value) => /[0-9]/.test(value)),
   }),
 );
 
@@ -40,38 +50,34 @@ const onFormSubmit = (state) => {
     const values = state.values;
 
     const user = {
+      name: values.name,
       email: values.email,
       password: values.password,
     };
 
-    userStore.loginUser(user).then((loginResponse) => {
-      if (loginResponse.valid) {
-        const userName = userStore.currentUser.name;
-
-        toast.add({ severity: 'success', summary: loginResponse.message, life: 3000 });
+    userStore.signupUser(user).then((signupResponse) => {
+      if (signupResponse.valid) {
+        toast.add({ severity: 'success', summary: signupResponse.message, life: 3000 });
         toast.add({
-          summary: `Welcome back ${userName}`,
-          life: 5000,
+          severity: 'info',
+          summary: 'In order to use dashboard, please log in with your newly created account.',
+          life: 8000,
         });
-        router.push('/dashboard');
+        router.push('/');
       } else {
-        toast.add({ severity: 'error', summary: loginResponse.message, life: 3000 });
+        toast.add({ severity: 'error', summary: signupResponse.message, life: 3000 });
       }
     });
   }
 };
 
 onMounted(() => {
-  layoutStore.setPrimary('sky');
+  layoutStore.setPrimary('lime');
 });
 </script>
 
-<!-- ------------------------------------------------------------------ -->
-
 <template>
   <div class="flex flex-col items-center justify-center gap-4 mt-52">
-    <Toast position="top-center" />
-
     <Form
       v-slot="$form"
       :initialValues
@@ -79,6 +85,21 @@ onMounted(() => {
       class="max-w-xs flex flex-col gap-3 w-full"
       @submit="onFormSubmit"
     >
+      <FloatLabel variant="on">
+        <IconField>
+          <InputIcon
+            class="pi pi-info-circle"
+            :style="{
+              color: $form.name?.invalid
+                ? 'var(--p-inputtext-invalid-border-color)'
+                : 'var(--p-inputtext-border-color)',
+            }"
+          />
+          <InputText id="name" name="name" fluid size="large" />
+        </IconField>
+        <label for="name">Name</label>
+      </FloatLabel>
+
       <FloatLabel variant="on">
         <IconField>
           <InputIcon
@@ -108,7 +129,6 @@ onMounted(() => {
             id="password"
             name="password"
             size="large"
-            :feedback="false"
             pt:maskIcon:class="cursor-pointer invalid:text-red-500"
             pt:unmaskIcon:class="cursor-pointer"
             toggleMask
@@ -135,11 +155,11 @@ onMounted(() => {
         <label for="password">Password</label>
       </FloatLabel>
 
-      <Button fluid type="submit" class="mt-8" size="large">Login</Button>
+      <Button fluid type="submit" class="mt-8" size="large">Sign Up</Button>
     </Form>
-    <Message severity="secondary" icon="pi pi-user-plus" variant="simple"
-      >Don't have an account ?
-      <RouterLink to="/signup" class="text-primary-500 cursor-pointer">Sign Up</RouterLink></Message
+    <Message severity="secondary" icon="pi pi-user" variant="simple"
+      >Have an account already ?
+      <RouterLink to="/" class="text-primary-500 cursor-pointer">Login</RouterLink></Message
     >
   </div>
 </template>
