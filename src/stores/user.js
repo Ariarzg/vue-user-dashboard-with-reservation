@@ -122,6 +122,20 @@ export const useUserStore = defineStore(
       }
     }
 
+    function logoutUser() {
+      if (currentUser.value) {
+        currentUser.value = null;
+        return {
+          valid: true,
+          message: 'Successfully Logged Out.',
+        };
+      }
+      return {
+        valid: false,
+        message: 'Unknown Error.',
+      };
+    }
+
     function _doesUserExist(user) {
       let userExistenceData = null;
 
@@ -141,6 +155,7 @@ export const useUserStore = defineStore(
       users,
       signupUser,
       loginUser,
+      logoutUser,
     };
   },
   {
