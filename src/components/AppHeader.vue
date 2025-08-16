@@ -1,10 +1,22 @@
 <script setup>
 import { useLayoutStore } from '@/stores/layout';
-import { useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const layoutStore = useLayoutStore();
+const userStore = useUserStore();
 
 const route = useRoute();
+const router = useRouter();
+
+const userIconStyle = computed(() => {
+  return userStore.currentUser ? { color: 'var(--p-primary-color)', cursor: 'pointer' } : {};
+});
+
+function goToDashboard() {
+  router.push('/dashboard');
+}
 </script>
 
 <template>
@@ -16,6 +28,9 @@ const route = useRoute();
         <i
           class="pi pi-user max-sm:bg-surface-200/75 dark:max-sm:bg-surface-800 p-2 rounded-md"
           style="font-size: 1.5rem"
+          :style="userIconStyle"
+          @click="goToDashboard"
+          :title="userStore.currentUser ? 'Dashboard' : ''"
         ></i>
         <span class="leading-none">{{ route.name }}</span>
       </div>

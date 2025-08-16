@@ -10,7 +10,6 @@ import {
   Button,
   Divider,
   useToast,
-  Toast,
   Message,
 } from 'primevue';
 import { onMounted, reactive } from 'vue';
@@ -40,7 +39,7 @@ const onFormSubmit = (state) => {
     const values = state.values;
 
     const user = {
-      email: values.email,
+      email: values.email.toLowerCase(),
       password: values.password,
     };
 
@@ -79,9 +78,7 @@ onMounted(() => {
 <!-- ------------------------------------------------------------------ -->
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 mt-52">
-    <Toast position="top-center" />
-
+  <div class="flex flex-col items-center justify-center gap-4 mt-[20svh]">
     <Form
       v-slot="$form"
       :initialValues

@@ -51,7 +51,7 @@ const onFormSubmit = (state) => {
 
     const user = {
       name: values.name,
-      email: values.email,
+      email: values.email.toLowerCase(),
       password: values.password,
     };
 
@@ -88,7 +88,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 mt-52">
+  <div class="flex flex-col items-center justify-center gap-4 mt-[20svh]">
     <Form
       v-slot="$form"
       :initialValues

@@ -54,6 +54,7 @@ export const useUserStore = defineStore(
           name: newUser.name,
           email: newUser.email,
           password: await _hashPassword(newUser.password),
+          reservations: [],
         };
 
         users.value.push(user);

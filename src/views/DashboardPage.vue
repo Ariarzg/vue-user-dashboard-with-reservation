@@ -1,3 +1,3 @@
 <script setup></script>
 
-<template>Dashboard</template>
+<template></template>
