@@ -6,6 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useToast } from 'primevue';
 
 import { useUserStore } from '@/stores/user';
+import ReservationPage from '@/views/ReservationPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +16,12 @@ const router = createRouter({
     {
       path: '/dashboard',
       component: DashboardPage,
-      name: 'Dashboard',
+      name: `Dashboard`,
+    },
+    {
+      path: '/reservation',
+      component: ReservationPage,
+      name: 'Reservation',
     },
   ],
 });
@@ -23,7 +29,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   const toast = useToast();
-  if (to.name === 'Dashboard' && !userStore.currentUser) {
+  if ((to.name === 'Dashboard' || to.name === 'Reservation') && !userStore.currentUser) {
     toast.add({
       severity: 'error',
       detail: 'You are not authorized. Please Login First.',
@@ -33,6 +39,10 @@ router.beforeEach((to, from, next) => {
     next('/');
   } else {
     next();
+  }
+
+  if (to.path === '/dashboard' && userStore.currentUser) {
+    to.name = `${userStore.currentUser.name}'s Dashboard`;
   }
 });
 

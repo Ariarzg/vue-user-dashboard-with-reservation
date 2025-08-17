@@ -136,6 +136,24 @@ export const useUserStore = defineStore(
       };
     }
 
+    function addReservation(reservation) {
+      if (currentUser.value) {
+        currentUser.value.reservations.push(reservation);
+        users.value.forEach((user) => {
+          if (user.id === currentUser.value.id) {
+            user.reservations.push(reservation);
+          }
+        });
+      }
+    }
+
+    function cancelReservation(reservationId) {
+      currentUser.value.reservations = currentUser.value.reservations.filter((reservation) => {
+        if (reservation.id === reservationId) return false;
+        return true;
+      });
+    }
+
     function _doesUserExist(user) {
       let userExistenceData = null;
 
@@ -156,6 +174,8 @@ export const useUserStore = defineStore(
       signupUser,
       loginUser,
       logoutUser,
+      addReservation,
+      cancelReservation,
     };
   },
   {

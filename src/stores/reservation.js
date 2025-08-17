@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { useUserStore } from './user';
 
 export const userReservationStore = defineStore(
   'reservation',
@@ -32,19 +33,52 @@ export const userReservationStore = defineStore(
       },
     ]);
 
-    function getReservation(reservationIndex) {
+    const userStore = useUserStore();
+
+    function reserveForUser(reservationId) {
+      let currentUser = userStore.currentUser;
+
+      let wantedReservation = _getReservation(reservationId);
+
+      if (wantedReservation) {
+        wantedReservation.reservedBy = currentUser.email;
+
+        userStore.addReservation(wantedReservation);
+
+        return {
+          valid: true,
+          message: 'Reservation successfully added to your profile dashboard.',
+        };
+      } else {
+        return {
+          valid: false,
+          message: 'Unknown Error.',
+        };
+      }
+    }
+
+    function cancelReservation(reservationId) {
+      userStore.cancelReservation(reservationId);
+      let wantedReservation = _getReservation(reservationId);
+      wantedReservation.reservedBy = null;
+    }
+
+    function _getReservation(reservationId) {
       let wantedReservation = null;
-      reservations.value.forEach((reservation, index) => {
-        if (reservationIndex === index) {
+
+      reservations.value.forEach((reservation) => {
+        if (reservation.id === reservationId) {
           wantedReservation = reservation;
         }
       });
+
       return wantedReservation;
     }
 
     return {
       reservations,
-      getReservation,
+      reserveForUser,
+      cancelReservation,
     };
   },
   {
