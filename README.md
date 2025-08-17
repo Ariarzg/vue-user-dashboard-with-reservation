@@ -35,9 +35,9 @@ _Add your screenshots or GIFs in this section to visually showcase the project_
 
 **Example:**
 
-| Login / Signup                     | Dashboard View                         | Dark Mode                              |
-| ---------------------------------- | -------------------------------------- | -------------------------------------- |
-| ![Login Screenshot](path-to-image) | ![Dashboard Screenshot](path-to-image) | ![Dark Mode Screenshot](path-to-image) |
+| Login / Signup                               | Dashboard View                                       | Dark Mode                                            |
+| -------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
+| ![Login Screenshot](./screenshots/login.jpg) | ![Dashboard Screenshot](./screenshots/dashboard.jpg) | ![Dark Mode Screenshot](./screenshots/dark-mode.jpg) |
 
 ---
 
