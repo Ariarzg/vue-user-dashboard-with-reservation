@@ -2,6 +2,7 @@
 import { onMounted } from 'vue';
 import { Toast } from 'primevue';
 import AppHeader from './components/AppHeader.vue';
+import GithubLink from './components/GithubLink.vue';
 import { useLayoutStore } from '@/stores/layout';
 
 const layoutStore = useLayoutStore();
@@ -22,4 +23,5 @@ onMounted(() => {
     <AppHeader />
     <RouterView></RouterView>
   </div>
+  <GithubLink />
 </template>
