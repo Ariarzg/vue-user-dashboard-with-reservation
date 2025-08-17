@@ -19,14 +19,14 @@ function reserve(reservationId) {
       severity: 'success',
       summary: 'Reservation',
       detail: reservationResponse.message,
-      life: 3000,
+      life: 1500,
     });
   } else {
     toast.add({
       severity: 'error',
       summary: 'Reservation',
       detail: reservationResponse.message,
-      life: 3000,
+      life: 1500,
     });
   }
 }

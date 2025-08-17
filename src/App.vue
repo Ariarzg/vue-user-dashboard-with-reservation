@@ -9,6 +9,10 @@ const layoutStore = useLayoutStore();
 
 onMounted(() => {
   layoutStore.updateColors('primary', layoutStore.primary);
+
+  if (layoutStore.darkMode) {
+    document.documentElement.classList.toggle('p-dark');
+  }
 });
 </script>
 

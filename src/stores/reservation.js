@@ -36,12 +36,13 @@ export const userReservationStore = defineStore(
     const userStore = useUserStore();
 
     function reserveForUser(reservationId) {
-      let currentUser = userStore.currentUser;
+      console.log('called reserveUser in reserve store');
 
       let wantedReservation = _getReservation(reservationId);
+      console.log(wantedReservation);
 
       if (wantedReservation) {
-        wantedReservation.reservedBy = currentUser.email;
+        wantedReservation.reservedBy = userStore.currentUser.email;
 
         userStore.addReservation(wantedReservation);
 

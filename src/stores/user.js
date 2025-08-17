@@ -141,7 +141,7 @@ export const useUserStore = defineStore(
         currentUser.value.reservations.push(reservation);
         users.value.forEach((user) => {
           if (user.id === currentUser.value.id) {
-            user.reservations.push(reservation);
+            user.reservations = currentUser.value.reservations;
           }
         });
       }
@@ -151,6 +151,14 @@ export const useUserStore = defineStore(
       currentUser.value.reservations = currentUser.value.reservations.filter((reservation) => {
         if (reservation.id === reservationId) return false;
         return true;
+      });
+      users.value.forEach((user) => {
+        if (user.id === currentUser.value.id) {
+          user.reservations = user.reservations.filter((reservation) => {
+            if (reservation.id === reservationId) return false;
+            return true;
+          });
+        }
       });
     }
 

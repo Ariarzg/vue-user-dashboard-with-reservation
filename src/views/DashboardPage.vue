@@ -66,7 +66,7 @@ onMounted(() => {
         <div
           v-for="reservation in reservations"
           :key="reservation.id"
-          class="p-2 bg-surface-200/60 dark:bg-surface-900/60 rounded-md flex items-center justify-between"
+          class="p-2 bg-surface-200/60 dark:bg-surface-900/60 rounded-lg flex items-center justify-between"
         >
           <p>{{ reservation.time }}</p>
           <Button severity="warn" @click.prevent="cancelReservation(reservation.id)">Cancel</Button>
